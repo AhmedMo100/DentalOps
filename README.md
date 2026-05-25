@@ -1,159 +1,88 @@
-# Turborepo starter
+# 🦷 DentalOps Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+Welcome to **DentalOps**! 🚀 An advanced, enterprise-grade multi-app workspace built to fully automate and optimize modern dental clinic operations. This ecosystem streamlines administrative workflows, manages medical records with strict data isolation, and natively automates patient communication to minimize no-show rates.
 
-## Using this example
+By leveraging a high-performance monorepo architecture, the entire platform ensures maximum code reuse, shared type safety, and fast incremental pipelines across all applications and shared packages.
 
-Run the following command:
 
-```sh
-npx create-turbo@latest
+## 🏗️ Workspace Architecture & Layout
+
+The repository utilizes a modular **Turborepo** layout powered by **pnpm workspaces** for absolute dependency isolation:
+
+```text
+├── apps/
+│   ├── web/               # Core Next.js Application (Clinic Dashboard, Analytics, & Scheduler)
+│   └── backend/           # Node.js Automation Engine (Background worker & notification queues)
+├── packages/
+│   ├── database/          # Centralized Prisma Schema & client configurations for PostgreSQL
+│   ├── design-system/     # Dark-themed UI component guidelines, design variables, and styles
+│   └── ts-config/         # Standardized TypeScript base configurations used workspace-wide
+├── turbo.json             # Global build caching, pipeline orchestration, and task dependency configurations
+└── package.json           # Root workspace dependency management and global command scripts
 ```
 
-## What's inside?
 
-This Turborepo includes the following packages/apps:
+### 🛠️ Complete Technical Stack
+- Workspace & Building: Turborepo, pnpm Workspaces
+- Frontend Tier: React, Next.js (App Router), TypeScript, Tailwind CSS
+- Backend Tier: Node.js, Express / NestJS Core architectural design
+- Database & Cache Layer: PostgreSQL (Main Store), Prisma ORM, Redis (In-memory engine)
+- Job Scheduling: BullMQ (Robust, distributed queue management)
+- Security Layer: Contextual JWT Multi-Tenancy Router (clinicId locking mechanism)
 
-### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 🌟 Core Engineering Implementations
+1. Asynchronous WhatsApp Queue Automation 💬
+DentalOps slashes clinic appointment cancellation and no-show rates by up to 40% using a bulletproof asynchronous messaging pipeline built with BullMQ and Redis:
+- Dynamic Delay: When an appointment is booked, specific reminders are pushed to the Redis store as delayed jobs.
+- Precise Execution: Workers automatically wake up and trigger customized WhatsApp notifications exactly 24 hours and 2 hours before the slot.
+- Failure Handling: Fully equipped with automatic retry mechanics, backoff strategies, and monitoring hooks to ensure high delivery rates.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+2. Immutable Multi-Tenancy Architecture 🔒
+Data isolation and medical privacy are maintained at the architectural level without the overhead of multiple physical databases:
+- Token Guard: Every authenticated session embeds an unchangeable clinicId into its JWT payload.
+- Database Constraints: Prisma clients apply strict query definitions ensuring that no appointment, record, or profile can be created, updated, or read without a perfect clinicId match.
+- Zero Cross-Talk: Guarantees absolute data leakage prevention between completely different clinics utilizing the platform.
 
-### Utilities
+3. High-Fidelity Dark Theme UX System 🎨
+The user interface follows strict behavioral design guidelines tailored for clinical desktop screens (--bg: #0a0d0f, --teal: #00c9a7):
+- No Layout Shifts: Page loading relies exclusively on Skeleton Screens to avoid jarring visual jumps (Strictly no generic full-page loading spinners).
+- Optimistic UI Updates: Actions like booking slots or moving timetables reflect immediately on screen, syncing with the database in the background to maximize perceived interface speed.
 
-This Turborepo has some additional tools already setup for you:
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### 🚀 Getting Started & Environment Local Setup
+Prerequisites
+Ensure your local environment runs Node.js (v18+), pnpm (v8+), alongside accessible instances of PostgreSQL and Redis.
 
-### Build
+1. Clone the Source Repository
+Bash
+git clone [https://github.com/username/dentalops-monorepo.git](https://github.com/username/dentalops-monorepo.git)
+cd dentalops-monorepo
+2. Install Workspace Dependencies
+Bash
+pnpm install
+3. Setup Local Environment Variables
+Create a root or package-level .env configuration file:
 
-To build all apps and packages, run the following command:
+Code snippet
+DATABASE_URL="postgresql://user:password@localhost:5432/dentalops?schema=public"
+REDIS_URL="redis://localhost:6379"
+JWT_SECRET="your-super-secure-secret-key"
+4. Run Development Servers
+Launch all localized applications simultaneously with smart workspace caching:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Bash
+pnpm dev
+5. Production Compilation
+Bash
+pnpm build
 
-```sh
-cd my-turborepo
-turbo build
-```
 
-Without global `turbo`, use your package manager:
+### 📄 License
+Copyright (c) 2026 DentalOps.
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
-```
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

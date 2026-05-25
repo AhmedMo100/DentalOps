@@ -4,7 +4,6 @@ Welcome to **DentalOps**! 🚀 An advanced, enterprise-grade multi-app workspace
 
 By leveraging a high-performance monorepo architecture, the entire platform ensures maximum code reuse, shared type safety, and fast incremental pipelines across all applications and shared packages.
 
----
 
 ## 🏗️ Workspace Architecture & Layout
 

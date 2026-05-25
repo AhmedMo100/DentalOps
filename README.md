@@ -5,7 +5,6 @@ Welcome to **DentalOps**! 🚀 An advanced, highly scalable multi-app workspace 
 
 This ecosystem is crafted as a unified monorepo to ensure efficient package sharing, lightning-fast incremental builds, and seamless independent application deployments.
 
----
 
 ## 🏗️ System Architecture & Layout
 
@@ -23,7 +22,6 @@ text
 ├── turbo.json             # Turborepo build caching and pipeline pipeline architecture
 └── package.json           # Global monorepo workspace configurations
 
----
 
 ## 🛠️ Deep Tech Stack
 
@@ -34,7 +32,6 @@ text
 - Background Jobs: BullMQ (Robust message queue infrastructure)
 - Security: JWT-Based Multi-Tenancy Router (clinicId session locking)
 
----
 
 ## 🌟 Key Technical Implementations
 
@@ -55,7 +52,6 @@ A unified dark-mode dashboard ecosystem across all apps (--bg: #0a0d0f, --teal: 
 No Spinners Rule: Skeleton screens are strictly required for full page loading states to maximize perceived performance.
 Optimistic UI: Actions (like booking/canceling slots) render immediately on the UI, syncing asynchronously with the server backend for snappy responsiveness.
 
----
 
 ## 🚀 Getting Started & Local Setup
 Prerequisites

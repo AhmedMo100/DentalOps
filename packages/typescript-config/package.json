@@ -1,9 +1,6 @@
 {
-  "name": "@repo/typescript-config",
-  "version": "0.0.0",
+  "name": "@dental-ops/typescript-config",
+  "version": "0.0.1",
   "private": true,
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  }
+  "files": ["base.json", "nestjs.json", "nextjs.json"]
 }
